@@ -1,0 +1,14 @@
+{
+    "name": "Football Area",
+    "short_name": "FB Area",
+    "description": "Aplikasi Football Area",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#00897B",
+    "theme_color": "#00897B",
+    "icons": [{
+        "src": "icon.png",
+        "sizes": "512x512",
+        "type": "image/png"
+    }]
+}
