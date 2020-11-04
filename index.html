@@ -3,23 +3,35 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Football Area</title>
-  <meta name="description" content="My first PWA" />
+  <title>Football-Area</title>
+  <meta name="description" content="My Football Area" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="css/materialize.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#00897B" />
+
+
+  <div class="jumbotron">
+    <!--<i class="fas fa-info-circle fa-2x styleAwesome"></i>
+    <i class="fas fa-film fa-4x styleAwesome"></i>-->.
+    <div class="brand-logo center">
+      <h2>Football-Area</h2>
+    </div>
+    <img src="icon.png" class="brand-logo center" width="150px">
+    <h4 lang="id" translate="no" class="brand-logo center">Info about Your Favorite Club</h4>
+  </div>
 </head>
 
 <body>
   <!-- Navigasi -->
-  <nav class="teal lighten-1" role="navigation">
+  <nav class="style-nav" role="navigation">
     <div class="nav-wrapper container">
-      <a href="#" class="brand-logo" id="logo-container">Football Area</a>
+      <a href="#" class="brand-logo" id="logo-container">Fball-Area</a>
       <a href="#" class="sidenav-trigger" data-target="nav-mobile">&#9776;</a>
 
       <ul class="topnav right hide-on-med-and-down"></ul>
-      <ul class="sidenav" id="nav-mobile"></ul>
+      <ul class="sidenav style-nav" id="nav-mobile"></ul>
     </div>
   </nav>
   <!-- Akhir Navigasi -->
@@ -35,26 +47,83 @@
 
   <script>
     // REGISTER SERVICE WORKER
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", function () {
-        navigator.serviceWorker
-          .register("/service-worker.js")
-          .then(function () {
-            console.log("Pendaftaran ServiceWorker berhasil");
-          })
-          .catch(function () {
-            console.log("Pendaftaran ServiceWorker gagal");
-          });
-      });
+    /* if ("serviceWorker" in navigator) {
+       window.addEventListener("load", function () {
+         navigator.serviceWorker
+           .register("/service-worker.js")
+           .then(function () {
+             console.log("Pendaftaran ServiceWorker berhasil");
+           })
+           .catch(function () {
+             console.log("Pendaftaran ServiceWorker gagal");
+           });
+       });
+     } else {
+       console.log("ServiceWorker belum didukung browser ini.");
+     }*/
+
+    if (!('serviceWorker' in navigator)) {
+      console.log("Service worker tidak didukung browser ini.");
     } else {
-      console.log("ServiceWorker belum didukung browser ini.");
+      registerServiceWorker();
+      requestPermission();
+    }
+    // Register service worker
+    function registerServiceWorker() {
+      return navigator.serviceWorker.register('/service-worker.js')
+        .then(function (registration) {
+          console.log('Pendaftaran Service Worker berhasil.');
+          return registration;
+        })
+        .catch(function (err) {
+          console.error('Pendaftaran Service Worker gagal.', err);
+        });
     }
 
+
+    //------------pengaturan untuk PUSH Notification-----------
+    function requestPermission() {
+      if ('Notification' in window) {
+        Notification.requestPermission().then(function (result) {
+          if (result === "denied") {
+            console.log("Fitur notifikasi tidak diijinkan.");
+            return;
+          } else if (result === "default") {
+            console.error("Pengguna menutup kotak dialog permintaan ijin.");
+            return;
+          }
+
+          navigator.serviceWorker.getRegistration().then(function (reg) {
+            reg.showNotification('Notifikasi diijinkan!');
+          });
+
+        });
+      }
+    }
+
+
+
+
     // REQUEST API UNTUK PERTAMA KALI
-    document.addEventListener("DOMContentLoaded", function () {
-      getArticles();
-    });
+    document.addEventListener("DOMContentLoaded", function ()
+
+      {});
   </script>
 </body>
+<footer class="page-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+        <h5 class="white-text">Football Area </h5>
+        <h6 class="grey-text text-lighten-2">Info about Your Favorite Club</h6>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+      © 2020 Copyright
+    </div>
+  </div>
+</footer>
 
 </html>

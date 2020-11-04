@@ -7,6 +7,7 @@
   <meta name="description" content="My first PWA" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="css/materialize.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#00897B" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -14,14 +15,14 @@
 
 <body>
   <!-- Navigasi -->
-  <nav class="teal lighten-1" role="navigation">
+  <nav class="style-nav" role="navigation">
     <div class="nav-wrapper container">
-      <a href="#" class="brand-logo" id="logo-container">Football Area</a>
+      <a href="#" class="brand-logo" id="logo-container">Fball Area</a>
       <a href="./index.html" class="sidenav-trigger" data-target="nav-mobile">
         <i class="material-icons">arrow_back</i>
       </a>
       <ul class="topnav right hide-on-med-and-down"></ul>
-      <ul class="sidenav" id="nav-mobile"></ul>
+      <ul class="sidenav  style-nav" id="nav-mobile"></ul>
     </div>
   </nav>
   <!-- Akhir Navigasi -->
@@ -31,6 +32,9 @@
   <div class="fixed-action-btn">
     <a class="btn-floating btn-large red" id="save">
       <i class="large material-icons">save</i>
+    </a>
+    <a class="btn-floating btn-large red" id="delete">
+      <i class="large material-icons">delete</i>
     </a>
   </div>
 
@@ -61,23 +65,48 @@
       var urlParams = new URLSearchParams(window.location.search);
       var isFromSaved = urlParams.get("saved");
       var btnSave = document.getElementById("save");
+      var btnDelete = document.getElementById("delete");
       if (isFromSaved) {
         // Hide fab jika dimuat dari indexed db
         btnSave.style.display = 'none';
-
+        btnDelete.style.display = 'block';
         // ambil artikel lalu tampilkan
         getSavedArticleById();
       } else {
+        btnSave.style.display = 'block';
+        btnDelete.style.display = 'none';
         var item = getArticleById();
       }
       btnSave.onclick = function () {
         console.log("Tombol FAB di klik.");
-        item.then(function (teams) {
-          saveForLater(teams);
+        item.then(function (articles) {
+          saveForLater(articles);
         });
       };
-    });
+
+
+      const getIdTeam = urlParams.get('id');
+      btnDelete.onclick = function () {
+        console.log("Tombol Hapus di klik.");
+        deleteTeamFav(parseInt(getIdTeam));
+      };
+    })
   </script>
 </body>
+<footer class="page-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+        <h5 class="white-text">Football Area </h5>
+        <h6 class="grey-text text-lighten-2">Info about Your Favorite Club</h6>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+      © 2020 Copyright
+    </div>
+  </div>
+</footer>
 
 </html>

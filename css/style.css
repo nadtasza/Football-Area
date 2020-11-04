@@ -1,0 +1,97 @@
+body {
+
+    background-image: url("/image/background1.png");
+    /*background-color: rgba(0, 255, 55, 0.479);*/
+}
+
+.jumbotron {
+
+    /* font-family: 'Montserrat Alternates', sans-serif;*/
+    font-size: 15px;
+    padding: 30px;
+    text-align: center;
+    color: red;
+    width: 100%;
+    background: url("/image/lapangan2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    font-weight: bolder;
+
+}
+
+
+.style-nav {
+    /*text-decoration: none;*/
+    color: white;
+    background: linear-gradient(to bottom, #3399ff 0%, #666699 100%);
+    font-weight: bolder;
+}
+
+a {
+    font-size: 16px;
+    font-size: bolder;
+}
+
+a:hover {
+    font-weight: bold;
+    color: rgb(255, 0, 179);
+
+}
+
+
+.style-image {
+    max-height: 500px;
+}
+
+.card-image {
+    position: center;
+}
+
+.style-content {
+    color: black;
+    background: linear-gradient(to right, red, yellow);
+    font-weight: bolder;
+}
+
+.style-content2 {
+
+    color: black;
+    background: rgb(208, 186, 13);
+    background: linear-gradient(90deg, rgba(208, 186, 13, 0.6138830532212884) 0%, rgba(186, 162, 72, 0) 34%, rgba(255, 0, 0, 0.6166841736694677) 76%);
+    font-weight: bolder;
+}
+
+*/ h2,
+h4,
+h5,
+h6 {
+    text-align: center;
+}
+
+p {
+    text-align: relative;
+}
+
+footer {
+    bottom: 0px;
+    color: white;
+    background: linear-gradient(to right, #660066 0%, #333300 100%);
+    text-align: center;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 1000px) {
+
+    header,
+    .jumbotron,
+    body,
+    .card-content,
+    footer {
+        width: 100%;
+        height: auto;
+        text-align: justify;
+        text-justify: auto;
+
+    }
+}

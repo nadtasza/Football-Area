@@ -40,23 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
   if (page == "") page = "home";
   loadPage(page);
 
-  /*function loadPage(page) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4) {
-        var content = document.querySelector("#body-content");
-        if (this.status == 200) {
-          content.innerHTML = xhttp.responseText;
-        } else if (this.status == 404) {
-          content.innerHTML = "<p>Halaman tidak ditemukan.</p>";
-        } else {
-          content.innerHTML = "<p>Ups.. halaman tidak dapat diakses.</p>";
-        }
-      }
-    };
-    xhttp.open("GET", "pages/" + page + ".html", true);
-    xhttp.send();
-  }*/
 
   function loadPage(page) {
     var xhttp = new XMLHttpRequest();
@@ -69,6 +52,10 @@ document.addEventListener("DOMContentLoaded", function () {
           getArticles();
         } else if (page === "saved") {
           getSavedArticles();
+        } else if (page === "standing") {
+          getAllStandings();
+        } else if (page === "schedule") {
+          getAllSchedule();
         }
         // ---
         if (this.status == 200) {

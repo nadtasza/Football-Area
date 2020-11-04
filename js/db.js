@@ -19,6 +19,10 @@ function saveForLater(teams) {
         })
         .then(function () {
             console.log("Artikel berhasil di simpan.");
+            M.toast({
+                html: 'Your favorite Club has been saved',
+                classes: 'rounded'
+            });
         });
 }
 
@@ -49,4 +53,22 @@ function getById(id) {
                 resolve(team);
             });
     });
+}
+
+
+function deleteTeamFav(id) {
+    dbPromised
+        .then(function (db) {
+            var tx = db.transaction("teams", "readwrite");
+            var store = tx.objectStore("teams");
+            store.delete(id);
+            console.log(id);
+            return tx.complete;
+        }).then(function () {
+            console.log("Team berhasil dihapus");
+            M.toast({
+                html: 'Success Delete Your favorite Club',
+                classes: 'rounded'
+            });
+        });
 }
