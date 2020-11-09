@@ -5,7 +5,7 @@ const league_id = 2021;
 
 
 const ENDPOINT_teams = `${base_url}competitions/${league_id}/teams`;
-const ENDPOINT_standing = `${base_url}competitions/${league_id}/standings`
+const ENDPOINT_standing = `${base_url}competitions/${league_id}/standings`;
 const ENDPOINT_schedule = `${base_url}competitions/${league_id}/matches`;
 
 
@@ -114,7 +114,7 @@ function getArticleById() {
     //let scheduleHTML = "";
     if ("caches" in window) {
       caches.match(base_url + "teams/" + idParam).then((response) => {
-        //console.log(response);
+
         if (response) {
           response.json().then(function (data) {
             let crest = data.crestUrl;
@@ -176,7 +176,7 @@ function getArticleById() {
 
 
 
-            // ${snarkdown(data.shortName)}
+            /*${snarkdown(data.shortName)}*/
             // Sisipkan komponen card ke dalam elemen dengan id #content
             document.getElementById("body-content").innerHTML = articleHTML;
             // Kirim objek data hasil parsing json agar bisa disimpan ke indexed db
@@ -200,7 +200,7 @@ function getArticleById() {
       .then(json)
       .then(function (data) {
         // Objek JavaScript dari response.json() masuk lewat variabel data.
-        console.log(data);
+
         // Menyusun komponen card artikel secara dinamis
         let articleHTML = `
           <div class="card style-content">
@@ -275,7 +275,7 @@ function getSavedArticles() {
     var articlesHTML = "";
     teams.forEach(function (team) {
 
-      /* let venue = teams.venue.substring(0, 100);*/
+
       articlesHTML += `
                   <div class="card">
                       <div class="card-image waves-effect waves-block waves-light">
@@ -355,7 +355,7 @@ function getSavedArticleById() {
 </div>
 </div>  `;
     });
-    // ${snarkdown(team.shortName)}
+
     // Sisipkan komponen card ke dalam elemen dengan id #content
     document.getElementById("body-content").innerHTML = articleHTML;
   });
@@ -418,7 +418,7 @@ function showStanding(data) {
 
   standingElement.innerHTML = `
               <div class="card" style="padding-left: 24px; padding-right: 24px; margin-top: 30px;">
-              <table class="striped responsive-table">
+              <table class="striped responsive-table centered highlight blue">
                   <thead>
                       <tr>
                           <th></th>
@@ -476,8 +476,7 @@ function getAllSchedule() {
 function showSchedule(data) {
   let matches = "";
   let scheduleElement = document.getElementById("schedule");
-  //<td><img src="${schedule.team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="30px" alt="badge"/></td>
-  //<td>${match.season.currentMatchday}</td>
+
   data.matches.forEach(function (match) {
     startDate = `${match.season.startDate}`;
     endDate = `${match.season.endDate}`;
@@ -514,7 +513,7 @@ function showSchedule(data) {
 
               <div class="card" style="padding-left: 30px; padding-right: 30px;margin-top: 30px;">
               
-              <table class="striped responsive-table">
+              <table class="striped responsive-table centered green">
                   <thead>
                          <tr>
                           <th>Date</th>

@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Activate sidebar nav
-  var elems = document.querySelectorAll(".sidenav");
+  const elems = document.querySelectorAll(".sidenav");
   M.Sidenav.init(elems);
   loadNav();
 
   function loadNav() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-      if (this.readyState == 4) {
+      if (this.readyState === 4) {
         if (this.status != 200) return;
 
         // Muat daftar tautan menu
@@ -37,14 +37,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Load page content
   var page = window.location.hash.substr(1);
-  if (page == "") page = "home";
+  if (page === "") page = "home";
   loadPage(page);
 
 
   function loadPage(page) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-      if (this.readyState == 4) {
+      if (this.readyState === 4) {
         var content = document.querySelector("#body-content");
 
         // tambahkan blok if berikut
@@ -58,16 +58,16 @@ document.addEventListener("DOMContentLoaded", function () {
           getAllSchedule();
         }
         // ---
-        if (this.status == 200) {
+        if (this.status === 200) {
           content.innerHTML = xhttp.responseText;
-        } else if (this.status == 404) {
+        } else if (this.status === 404) {
           content.innerHTML = "<p>Halaman tidak ditemukan.</p>";
         } else {
           content.innerHTML = "<p>Ups.. halaman tidak dapat diakses.</p>";
         }
       }
     };
-    xhttp.open("GET", "pages/" + page + ".html", true);
+    xhttp.open("GET", `pages/${page}.html`, true);
     xhttp.send();
   }
 

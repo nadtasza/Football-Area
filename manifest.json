@@ -1,14 +1,16 @@
 {
     "name": "Football Area",
+    "gcm_sender_id": "874154568789",
     "short_name": "FB Area",
     "description": "Aplikasi Football Area",
     "start_url": "/index.html",
     "display": "standalone",
-    "background_color": "#00897B",
-    "theme_color": "#00897B",
+    "background_color": "#3067a6",
+    "theme_color": "#3067a6",
     "icons": [{
         "src": "icon.png",
         "sizes": "512x512",
-        "type": "image/png"
+        "type": "image/png",
+        "purpose": "any maskable"
     }]
 }

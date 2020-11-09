@@ -1,5 +1,5 @@
 const CACHE_NAME = "Football-Area";
-var urlsToCache = [
+const urlsToCache = [
   "/",
   "/nav.html",
   "/index.html",
@@ -18,16 +18,21 @@ var urlsToCache = [
   "/js/idb.js",
   "/js/nav.js",
   "/js/script.js",
+  "/push.js",
   "/manifest.json",
   "/service-worker.js",
   "/image/background1.png",
   "/image/lapangan2.jpg",
   "/icon.png",
-  'https://fonts.googleapis.com/icon?family=Material+Icons',
-  'https://unpkg.com/snarkdown@1.0.2/dist/snarkdown.umd.js'
+  "https://fonts.googleapis.com/icon?family=Material+Icons",
+  "https://fonts.gstatic.com/s/materialicons/v67/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2",
+  "https://fonts.gstatic.com/s/materialicons/v67/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2",
+  "https://unpkg.com/snarkdown@1.0.2/dist/snarkdown.umd.js"
+
+
 ];
 
-self.addEventListener("install", function (event) {
+self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
       return cache.addAll(urlsToCache);
@@ -35,8 +40,8 @@ self.addEventListener("install", function (event) {
   );
 });
 
-self.addEventListener("fetch", function (event) {
-  let base_url = "https://api.football-data.org/v2/";
+self.addEventListener("fetch", event => {
+  const base_url = "https://api.football-data.org/v2/";
   const online = self.navigator.onLine;
   if (event.request.url.indexOf(base_url) > -1 && online) {
     event.respondWith(
@@ -50,7 +55,7 @@ self.addEventListener("fetch", function (event) {
   } else {
     event.respondWith(
       caches.match(event.request, {
-        'ignoreSearch': true
+        ignoreSearch: true
       }).then(function (response) {
         return response || fetch(event.request);
       })
@@ -58,7 +63,7 @@ self.addEventListener("fetch", function (event) {
   }
 });
 
-self.addEventListener("activate", function (event) {
+self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(function (cacheNames) {
       return Promise.all(
@@ -75,7 +80,7 @@ self.addEventListener("activate", function (event) {
 
 
 //---pengaturan untuk push sama dengan sw.js di latihan
-self.addEventListener('push', function (event) {
+self.addEventListener('push', event => {
   var body;
   if (event.data) {
     body = event.data.text();
