@@ -1,5 +1,5 @@
-let dbPromised = idb.open("Football Area ", 1, function (upgradeDb) {
-    let articlesObjectStore = upgradeDb.createObjectStore("teams", {
+const dbPromised = idb.open("Football Area ", 1, (upgradeDb) => {
+    const articlesObjectStore = upgradeDb.createObjectStore("teams", {
         keyPath: "id"
     });
     articlesObjectStore.createIndex("name", "name", {
@@ -8,7 +8,7 @@ let dbPromised = idb.open("Football Area ", 1, function (upgradeDb) {
 });
 
 
-function saveForLater(teams) {
+const saveForLater = teams => {
     dbPromised
         .then(function (db) {
             const tx = db.transaction("teams", "readwrite");
@@ -26,12 +26,12 @@ function saveForLater(teams) {
         });
 }
 
-function getAll() {
+const getAll = () => {
     return new Promise(function (resolve, reject) {
         dbPromised
             .then(function (db) {
-                var tx = db.transaction("teams", "readonly");
-                var store = tx.objectStore("teams");
+                const tx = db.transaction("teams", "readonly");
+                const store = tx.objectStore("teams");
                 return store.getAll();
             })
             .then(function (teams) {
@@ -41,12 +41,12 @@ function getAll() {
 }
 
 
-function getById(id) {
+const getById = id => {
     return new Promise(function (resolve, reject) {
         dbPromised
             .then(function (db) {
-                var tx = db.transaction("teams", "readonly");
-                var store = tx.objectStore("teams");
+                const tx = db.transaction("teams", "readonly");
+                const store = tx.objectStore("teams");
                 return store.get(parseInt(id));
             })
             .then(function (team) {
@@ -56,11 +56,11 @@ function getById(id) {
 }
 
 
-function deleteTeamFav(id) {
+const deleteTeamFav = id => {
     dbPromised
         .then(function (db) {
-            var tx = db.transaction("teams", "readwrite");
-            var store = tx.objectStore("teams");
+            const tx = db.transaction("teams", "readwrite");
+            const store = tx.objectStore("teams");
             store.delete(id);
             console.log(id);
             return tx.complete;

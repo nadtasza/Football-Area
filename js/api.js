@@ -83,18 +83,18 @@ function getArticles() {
         crest = crest.replace(/^http:\/\//i, 'https://');
         articlesHTML += `
     <div class="col s12 m6">
-      <div class="card">
+      <div class="card deep-purple lighten-5 z-depth-5">
             <div class="card-image  waves-effect waves-block waves-light style-image">
               <img src="${crest}" />
             </div>
-          <div class="card-content">
+          <div class="card-content" style="font-weight : bolder">
             <span class="card-title">
               <h5>${team.name}</h5>
               <h6>${team.shortName}</h6>
             </span>
           </div>
-          <div class="card-action style-content ">
-           <center><a class="waves-effect waves-light blue btn-large" href="./article.html?id=${team.id}">VIEW PROFILE</a></button></center>
+          <div class="card-action purple darken-3">
+           <center><a class="waves-effect waves-light blue btn-large z-depth-5" href="./article.html?id=${team.id}">VIEW PROFILE</a></button></center>
                     </div>
       </div>
     </div>`;
@@ -141,7 +141,7 @@ function getArticleById() {
             data.squad.forEach(function (squad) {
               // Menyusun komponen card artikel secara dinamis
               articleHTML += `
-      <div class="card z-depth-2">
+      <div class="card z-depth-4">
           <div class="card-content">
           <h5>Player Info</h5>
                 <table>
@@ -176,6 +176,7 @@ function getArticleById() {
 
 
 
+
             /*${snarkdown(data.shortName)}*/
             // Sisipkan komponen card ke dalam elemen dengan id #content
             document.getElementById("body-content").innerHTML = articleHTML;
@@ -203,32 +204,33 @@ function getArticleById() {
 
         // Menyusun komponen card artikel secara dinamis
         let articleHTML = `
-          <div class="card style-content">
+          <div class="card indigo lighten-5 red-text text-red-accent-4 z-depth-5" style="font-weight : bolder;border-radius : 15%; ">
             <div class="card-image waves-effect waves-block waves-light">
               <img src="${data.crestUrl}" />
             </div>
             <div class="card-content">
-              <span class="card-title">${data.name}</span>
-              <p>Shortname : ${data.shortName}</p>
+              <span class="card-title"><h5>${data.name}</h5></span>
+              <p>Short name : ${data.shortName}</p>
               <p>Venue : ${data.venue}</p>
               <p>Adress :${data.address}</p>
               <p>Phone : ${data.phone}</p>
               <p>Club Colors : ${data.clubColors}</p>
               <p>Email : ${data.email}</p>
               <p>Last Update : ${data.lastUpdated}</p>
-            </div>
-            <div class="card-action">
-           <center><a class="waves-effect waves-light blue btn-large" href=" ${data.website}">Go to Official Website</a></button></center>
-                    </div>
+            </div>       
           </div>
+          <div class="card-action"> 
+           <center><a class="waves-effect waves-light blue btn z-depth-5" href=" ${data.website}">Go to Official Website</a></button></center>
+           </div>  
+
         `;
         data.squad.forEach(function (squad) {
           // Menyusun komponen card artikel secara dinamis
           articleHTML += `
-  <div class="card z-depth-2">
-      <div class="card-content style-content2">
+  <div class="card z-depth-4">
+      <div class="card-content amber lighten-2 black-text text-black" style="font-weight:bolder">
       <h5>Detail Player</h5>
-            <table>
+            <table class="striped">
                 <tbody>
                     <tr>
                         <td>Name:</td>
@@ -277,16 +279,16 @@ function getSavedArticles() {
 
 
       articlesHTML += `
-                  <div class="card">
+                  <div class="card deep-purple lighten-5 z-depth-5">
                       <div class="card-image waves-effect waves-block waves-light">
                         <img src="${team.crestUrl}" />
                       </div>
-                    <div class="card-content">
-                      <span class="card-title truncate">${team.name}</span>
-                       ${team.shortName}
+                    <div class="card-content style="font-weight : bolder">
+                       <h5>${team.name}</h5>
+                       <h6>${team.shortName}</h6>
                     </div>
-                    <div class="card-action style-content ">
-           <center><a class="waves-effect waves-light blue btn-large" href="./article.html?id=${team.id}&saved=true">VIEW PROFILE</a></button></center>
+                    <div class="card-action  purple darken-3">
+           <center><a class="waves-effect waves-light blue btn-large z-depth-5" href="./article.html?id=${team.id}&saved=true">VIEW PROFILE</a></button></center>
                     </div>
                   </div>
                 `;
@@ -302,13 +304,13 @@ function getSavedArticleById() {
   // let squadsHTML = "";
   getById(idParam).then(function (team) {
     let articleHTML = `
-    <div class="card style-content">
+    <div class="card indigo lighten-5 red-text text-red-accent-4 z-depth-5" style="font-weight : bolder;border-radius : 15%; ">
       <div class="card-image waves-effect waves-block waves-light">
         <img src="${team.crestUrl}" />
       </div>
       <div class="card-content">
-        <span class="card-title">${team.name}</span>
-        <p>Website :${team.shortName}</p>
+        <span class="card-title"><h5>${team.name}</h5></span>
+        <p>Short Name :${team.shortName}</p>
         <p>Venue :${team.venue}</p>
                       <p>Adress :${team.adress}</p>
                       <p>Phone :${team.phone}</p>
@@ -316,18 +318,18 @@ function getSavedArticleById() {
                       <p>Email :${team.email}</p>
                       <p>Last Update :${team.lastUpdated}</p>             
       </div>
-      <div class="card-action">
-           <center><a class="waves-effect waves-light blue btn-large" href=" ${team.website}">Go to Official Website</a></button></center>
-                    </div>
     </div>
+    <div class="card-action">
+           <center><a class="waves-effect waves-light blue btn z-depth-5" href=" ${team.website}">Go to Official Website</a></button></center>
+                    </div>
   `;
     team.squad.forEach(function (squad) {
       // Menyusun komponen card artikel secara dinamis
       articleHTML += `
-<div class="card z-depth-2">
-<div class="card-content style-content2">
+<div class="card z-depth-4">
+<div class="card-content amber lighten-2 black-text text-black" style="font-weight:bolder">
 <h5>Player Info</h5>
-      <table>
+      <table class="striped">
           <tbody>
               <tr>
                   <td>Name:</td>
@@ -403,6 +405,7 @@ function showStanding(data) {
   data.standings[0].table.forEach(function (standing) {
     standings += `
                 <tr>
+                    <td>${standing.position}</td>
                     <td><img src="${standing.team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="30px" alt="badge"/></td>
                     <td>${standing.team.name}</td>
                     <td>${standing.won}</td>
@@ -417,27 +420,25 @@ function showStanding(data) {
   });
 
   standingElement.innerHTML = `
-              <div class="card" style="padding-left: 24px; padding-right: 24px; margin-top: 30px;">
-              <table class="striped responsive-table centered highlight blue">
+              <table class="striped responsive-table centered highlight black text-red red-text z-depth-5">
                   <thead>
                       <tr>
-                          <th></th>
+                          <th>Position</th>
+                          <th>Logo</th>
                           <th>Team Name</th>
-                          <th>W</th>
-                          <th>D</th>
-                          <th>L</th>
-                          <th>P</th>
-                          <th>GF</th>
-                          <th>GA</th>
-                          <th>GD</th>
+                          <th>Won</th>
+                          <th>Draw</th>
+                          <th>Lost</th>
+                          <th>Points</th>
+                          <th>Goals For</th>
+                          <th>Goals Against</th>
+                          <th>Goal Difference</th>
                       </tr>
                    </thead>
-                  <tbody id="standing">
+                  <tbody id="standing" class=" grey darken-2 text-white white-text" style="font-weight:bolder">
                       ${standings}
                   </tbody>
               </table>
-              
-              </div>
   `;
 }
 
@@ -481,18 +482,22 @@ function showSchedule(data) {
     startDate = `${match.season.startDate}`;
     endDate = `${match.season.endDate}`;
     currentday = `${match.season.currentMatchday}`;
-
     matches += `
                     
-                    <tr>
+                  <tr style="font-weight :bolder;color:red;">
                     <td>${match.utcDate}</td>
+                    <td>
+                        <img src="https://crests.football-data.org/${match.homeTeam.id}.svg" width=30px; alt="badge"/>
+                    </td>
                     <td>${match.homeTeam.name}</td>
+                    <td>
+                    <img src="https://crests.football-data.org/${match.awayTeam.id}.svg" width=30px; alt="badge"/>
+                    </td>
                     <td>${match.awayTeam.name}</td>
                     <td>${match.matchday}</td>
                     <td>${match.status}</td>
-                    <td>${match.score.winner}</td>
                     <td>${match.score.fullTime.homeTeam} - ${match.score.fullTime.awayTeam}</td>
-                    <tr>
+                  </tr>
                     
                     
                 
@@ -501,27 +506,28 @@ function showSchedule(data) {
 
 
   scheduleElement.innerHTML = `
-  <div class="card" style="padding-left: 30px; padding-right: 30px;margin-top: 30px;">
-  <table>
+  
+  <table class=" responsive-table centered red text-white white-text z-depth-5" style="margin-bottom: 30px;font-weight:bolder">
   <tr>
   <td>Start day : ${startDate}</td>
   <td>End day : ${endDate}</td>
   <td>Current Matchday : ${currentday}</td>
   </tr>
   </table>
-  </div>
-
-              <div class="card" style="padding-left: 30px; padding-right: 30px;margin-top: 30px;">
+  
+        
               
-              <table class="striped responsive-table centered green">
+              
+              <table class="striped responsive-table centered highlight  lime lighten-3 z-depth-5">
                   <thead>
                          <tr>
                           <th>Date</th>
-                          <th>Home</th>
-                          <th>Away</th>
+                          <th></th>
+                          <th>Home Team</th>
+                          <th></th>
+                          <th>Away Team</th>
                           <th>Day</th>
                           <th>Status</th>
-                          <th>Winner</th>
                           <th>Score</th>
                         </tr>
                      
@@ -531,6 +537,8 @@ function showSchedule(data) {
                   </tbody>
               </table>
               
-              </div>
+              
   `;
 }
+
+/*<div class="card" style="padding-left: 24px; padding-right: 24px; margin-top: 30px;">*/
