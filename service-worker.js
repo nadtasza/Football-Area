@@ -96,7 +96,7 @@ workbox.precaching.precacheAndRoute([{
   },
   {
     url: '/push.js',
-    revision: '1'
+    revision: '3'
   },
   {
     url: '/manifest.json',
