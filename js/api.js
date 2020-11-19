@@ -486,13 +486,7 @@ function showSchedule(data) {
                     
                   <tr style="font-weight :bolder;color:red;">
                     <td>${match.utcDate}</td>
-                    <td>
-                        <img src="https://crests.football-data.org/${match.homeTeam.id}.svg" width=30px; alt="badge"/>
-                    </td>
                     <td>${match.homeTeam.name}</td>
-                    <td>
-                    <img src="https://crests.football-data.org/${match.awayTeam.id}.svg" width=30px; alt="badge"/>
-                    </td>
                     <td>${match.awayTeam.name}</td>
                     <td>${match.matchday}</td>
                     <td>${match.status}</td>
@@ -522,9 +516,7 @@ function showSchedule(data) {
                   <thead>
                          <tr>
                           <th>Date</th>
-                          <th></th>
                           <th>Home Team</th>
-                          <th></th>
                           <th>Away Team</th>
                           <th>Day</th>
                           <th>Status</th>

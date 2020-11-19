@@ -1,38 +1,16 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
 
+if (workbox)
+  console.log(`Workbox berhasil dimuat`);
+else
+  console.log(`Workbox gagal dimuat`);
+
+workbox.routing.registerRoute(
+  new RegExp('/pages/'),
+  workbox.strategies.staleWhileRevalidate()
+);
 
 const CACHE_NAME = "Football-Area";
-const urlsToCache = [
-  "/",
-  "/nav.html",
-  "/index.html",
-  "/article.html",
-  "/pages/home.html",
-  "/pages/saved.html",
-  "/pages/schedule.html",
-  "/pages/standing.html",
-  "/css/materialize.min.css",
-  "/css/materialize.css",
-  "/css/style.css",
-  "/js/materialize.js",
-  "/js/materialize.min.js",
-  "/js/api.js",
-  "/js/db.js",
-  "/js/idb.js",
-  "/js/nav.js",
-  "/push.js",
-  "/manifest.json",
-  "/service-worker.js",
-  "/image/background1.png",
-  "/image/lapangan2.jpg",
-  "/icon.png",
-  "/icon192.png",
-  "https://fonts.googleapis.com/icon?family=Material+Icons",
-  "https://fonts.gstatic.com/s/materialicons/v67/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2",
-  "https://unpkg.com/snarkdown@1.0.2/dist/snarkdown.umd.js"
-
-
-];
 
 workbox.precaching.precacheAndRoute([{
     url: '/index.html',
@@ -67,6 +45,10 @@ workbox.precaching.precacheAndRoute([{
     revision: '1'
   },
   {
+    url: '/css/materialize.css',
+    revision: '1'
+  },
+  {
     url: '/css/style.css',
     revision: '1'
   },
@@ -80,7 +62,7 @@ workbox.precaching.precacheAndRoute([{
   },
   {
     url: '/js/api.js',
-    revision: '1'
+    revision: '2'
   },
   {
     url: '/js/db.js',
@@ -96,15 +78,15 @@ workbox.precaching.precacheAndRoute([{
   },
   {
     url: '/push.js',
-    revision: '3'
+    revision: '2'
   },
   {
     url: '/manifest.json',
-    revision: '1'
+    revision: '2'
   },
   {
     url: '/service-worker.js',
-    revision: '1'
+    revision: '2'
   },
   {
     url: '/image/background1.png',
@@ -133,29 +115,24 @@ workbox.precaching.precacheAndRoute([{
   {
     url: 'https://unpkg.com/snarkdown@1.0.2/dist/snarkdown.umd.js',
     revision: '1'
+  },
+  {
+    url: 'https://fonts.gstatic.com/s/materialicons/v67/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2',
+    revision: '1'
   }
-
 ]);
 
-if (workbox)
-  console.log(`Workbox berhasil dimuat`);
-else
-  console.log(`Workbox gagal dimuat`);
 
-workbox.routing.registerRoute(
-  new RegExp('/pages/'),
-  workbox.strategies.staleWhileRevalidate()
-);
 
-self.addEventListener("install", event => {
+/*self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
       return cache.addAll(urlsToCache);
     })
   );
-});
+});*/
 
-self.addEventListener("fetch", event => {
+/*self.addEventListener("fetch", event => {
   const base_url = "https://api.football-data.org/v2/";
   const online = self.navigator.onLine;
   if (event.request.url.indexOf(base_url) > -1 && online) {
@@ -166,8 +143,14 @@ self.addEventListener("fetch", event => {
           return response;
         })
       })
-    );
-  } else {
+    );*/
+workbox.routing.registerRoute(
+  new RegExp('https://api.football-data.org/v2/'),
+  workbox.strategies.staleWhileRevalidate({
+    cacheName: 'api-data'
+  })
+);
+/*else {
     event.respondWith(
       caches.match(event.request, {
         ignoreSearch: true
@@ -176,9 +159,9 @@ self.addEventListener("fetch", event => {
       })
     )
   }
-});
+});*/
 
-self.addEventListener("activate", event => {
+/*self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(function (cacheNames) {
       return Promise.all(
@@ -191,7 +174,22 @@ self.addEventListener("activate", event => {
       );
     })
   );
-});
+});*/
+
+workbox.routing.registerRoute(
+  /\.(?:png|gif|jpg|jpeg|svg)$/,
+  workbox.strategies.cacheFirst({
+    cacheName: 'images',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
+      }),
+    ],
+  }),
+);
+
+
 
 
 //---pengaturan untuk push sama dengan sw.js di latihan
@@ -215,3 +213,13 @@ self.addEventListener('push', event => {
     self.registration.showNotification('Push Notification', options)
   );
 });
+
+/* plugins: [
+     new workbox.cacheableResponse.Plugin({
+       statuses: [0, 200],
+     }),
+     new workbox.expiration.Plugin({
+       maxAgeSeconds: 60 * 60 * 24 * 365,
+       maxEntries: 30,
+     }),
+   ]*/
