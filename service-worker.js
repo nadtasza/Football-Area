@@ -1,16 +1,11 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
 
-if (workbox)
+if (workbox) {
   console.log(`Workbox berhasil dimuat`);
-else
+} else {
   console.log(`Workbox gagal dimuat`);
+}
 
-workbox.routing.registerRoute(
-  new RegExp('/pages/'),
-  workbox.strategies.staleWhileRevalidate()
-);
-
-const CACHE_NAME = "Football-Area";
 
 workbox.precaching.precacheAndRoute([{
     url: '/index.html',
@@ -120,61 +115,90 @@ workbox.precaching.precacheAndRoute([{
     url: 'https://fonts.gstatic.com/s/materialicons/v67/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2',
     revision: '1'
   }
-]);
 
+], {
+  ignoreUrlParametersMatching: [/.*/],
+});
 
-
-/*self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(function (cache) {
-      return cache.addAll(urlsToCache);
-    })
-  );
-});*/
-
-/*self.addEventListener("fetch", event => {
-  const base_url = "https://api.football-data.org/v2/";
-  const online = self.navigator.onLine;
-  if (event.request.url.indexOf(base_url) > -1 && online) {
-    event.respondWith(
-      caches.open(CACHE_NAME).then(function (cache) {
-        return fetch(event.request).then(function (response) {
-          cache.put(event.request.url, response.clone());
-          return response;
-        })
-      })
-    );*/
 workbox.routing.registerRoute(
-  new RegExp('https://api.football-data.org/v2/'),
+  ({
+    url
+  }) => url.origin === 'https://api.football-data.org/v2/',
   workbox.strategies.staleWhileRevalidate({
-    cacheName: 'api-data'
+    cacheName: 'api-data',
   })
 );
-/*else {
-    event.respondWith(
-      caches.match(event.request, {
-        ignoreSearch: true
-      }).then(function (response) {
-        return response || fetch(event.request);
-      })
-    )
-  }
-});*/
 
-/*self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys().then(function (cacheNames) {
-      return Promise.all(
-        cacheNames.map(function (cacheName) {
-          if (cacheName != CACHE_NAME) {
-            console.log("ServiceWorker: cache " + cacheName + " dihapus");
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
-});*/
+workbox.routing.registerRoute(
+  new RegExp('/pages/'),
+  workbox.strategies.staleWhileRevalidate({
+    cacheName: 'pages'
+  })
+);
+workbox.routing.registerRoute(
+  new RegExp('/index.html'),
+  workbox.strategies.staleWhileRevalidate({
+    cacheName: 'index'
+  })
+);
+workbox.routing.registerRoute(
+  new RegExp('/article.html'),
+  workbox.strategies.staleWhileRevalidate({
+    cacheName: 'articles'
+  })
+);
+workbox.routing.registerRoute(
+  new RegExp('/nav.html'),
+  workbox.strategies.staleWhileRevalidate({
+    cacheName: 'nav'
+  })
+);
+
+
+/*workbox.routing.registerRoute(
+  new RegExp('https://api.football-data.org/v2/'),
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'api-data',
+    plugins: [
+      new workbox.cacheableResponse.Plugin({
+        statuses: [0, 200],
+      }),
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+        maxEntries: 30,
+      }),
+    ]
+  })
+);*/
+
+
+
+
+
+// Menyimpan cache dari CSS Google Fonts
+workbox.routing.registerRoute(
+  /^https:\/\/fonts\.googleapis\.com/,
+  workbox.strategies.staleWhileRevalidate({
+    cacheName: 'google-fonts-stylesheets',
+  })
+);
+
+// Menyimpan cache untuk file font selama 1 tahun
+workbox.routing.registerRoute(
+  /^https:\/\/fonts\.gstatic\.com/,
+  workbox.strategies.cacheFirst({
+    cacheName: 'google-fonts-webfonts',
+    plugins: [
+      new workbox.cacheableResponse.Plugin({
+        statuses: [0, 200],
+      }),
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+        maxEntries: 30,
+      }),
+    ],
+  })
+);
 
 workbox.routing.registerRoute(
   /\.(?:png|gif|jpg|jpeg|svg)$/,
@@ -213,13 +237,3 @@ self.addEventListener('push', event => {
     self.registration.showNotification('Push Notification', options)
   );
 });
-
-/* plugins: [
-     new workbox.cacheableResponse.Plugin({
-       statuses: [0, 200],
-     }),
-     new workbox.expiration.Plugin({
-       maxAgeSeconds: 60 * 60 * 24 * 365,
-       maxEntries: 30,
-     }),
-   ]*/
