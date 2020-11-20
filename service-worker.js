@@ -57,7 +57,7 @@ workbox.precaching.precacheAndRoute([{
   },
   {
     url: '/js/api.js',
-    revision: '2'
+    revision: '1'
   },
   {
     url: '/js/db.js',
@@ -73,15 +73,15 @@ workbox.precaching.precacheAndRoute([{
   },
   {
     url: '/push.js',
-    revision: '2'
+    revision: '1'
   },
   {
     url: '/manifest.json',
-    revision: '2'
+    revision: '1'
   },
   {
     url: '/service-worker.js',
-    revision: '2'
+    revision: '1'
   },
   {
     url: '/image/background1.png',
@@ -121,13 +121,19 @@ workbox.precaching.precacheAndRoute([{
 });
 
 workbox.routing.registerRoute(
+  new RegExp('https://api.football-data.org/v2/'),
+  workbox.strategies.staleWhileRevalidate({
+    cacheName: 'api-data',
+  })
+)
+/*workbox.routing.registerRoute(
   ({
     url
   }) => url.origin === 'https://api.football-data.org/v2/',
   workbox.strategies.staleWhileRevalidate({
     cacheName: 'api-data',
   })
-);
+);*/
 
 workbox.routing.registerRoute(
   new RegExp('/pages/'),
@@ -154,24 +160,12 @@ workbox.routing.registerRoute(
   })
 );
 
-
-/*workbox.routing.registerRoute(
-  new RegExp('https://api.football-data.org/v2/'),
-  new workbox.strategies.StaleWhileRevalidate({
-    cacheName: 'api-data',
-    plugins: [
-      new workbox.cacheableResponse.Plugin({
-        statuses: [0, 200],
-      }),
-      new workbox.expiration.Plugin({
-        maxAgeSeconds: 60 * 60 * 24 * 365,
-        maxEntries: 30,
-      }),
-    ]
+workbox.routing.registerRoute(
+  new RegExp('https://crests.football-data.org/'),
+  workbox.strategies.staleWhileRevalidate({
+    cacheName: 'api-images',
   })
-);*/
-
-
+);
 
 
 
